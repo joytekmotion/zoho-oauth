@@ -2,10 +2,9 @@
 
 namespace Joytekmotion\Zoho\Oauth;
 
-use GuzzleHttp\Exception\RequestException;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Joytekmotion\Zoho\Oauth\Contracts\Client;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class SelfClient implements Client
 {
@@ -28,7 +27,7 @@ class SelfClient implements Client
     }
 
     /**
-     * @throws RequestException
+     * @throws Exception
      */
     public function generateRefreshToken(string $code): string
     {
@@ -40,7 +39,7 @@ class SelfClient implements Client
     }
 
     /**
-     * @throws RequestException
+     * @throws Exception
      */
     protected function makeRequest(array $body): array
     {
@@ -54,20 +53,20 @@ class SelfClient implements Client
     }
 
     /**
-     * @throws RequestException
+     * @throws Exception
      */
     public function generateAccessToken(): string
     {
         if (!$this->accessToken || time() >= $this->expiryTime) {
             if (!$this->refreshToken) {
-                throw new UnprocessableEntityHttpException('Refresh token is required!');
+                throw new Exception('Refresh token is required!');
             }
             $response = $this->makeRequest(array_merge($this->defaultBodyParams(), [
                 'refresh_token' => $this->refreshToken,
                 'grant_type' => 'refresh_token'
             ]));
             if (!isset($response['access_token'])) {
-                throw new UnprocessableEntityHttpException('Access token not found in response');
+                throw new Exception('Access token not found in response');
             }
             $accessToken = $response['access_token'];
             // 1 hour expiry time
