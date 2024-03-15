@@ -2,9 +2,8 @@
     "name": "joytekmotion/zoho-oauth",
     "description": "This is a laravel package for Zoho Oauth Self Client. This can be used for generating access token and refresh token from your own Zoho account.",
     "type": "library",
-    "minimum-stability": "dev",
     "require": {
-        "php": "^7.2, ^8.0",
+        "php": "^7.2|^8.0",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/support":  "^10.0"
     },
