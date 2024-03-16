@@ -14,7 +14,7 @@ class SelfClient implements Client
     protected string $baseUrl;
     protected string|null $refreshToken;
 
-    protected string|null $accessToken;
+    protected string|null $accessToken = null;
 
     protected int|null $expiryTime;
 
